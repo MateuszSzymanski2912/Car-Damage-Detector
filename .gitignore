@@ -1,5 +1,4 @@
 car damage detection/
 __pycache__/
 .vscode/
-resnet50.pth
 .env

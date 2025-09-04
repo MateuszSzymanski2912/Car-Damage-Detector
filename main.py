@@ -11,12 +11,12 @@ def root():
     return {"message": "Car Damage Detection API is running"}
 
 @app.post("/predict")
-async def predict(files: list[UploadFile] = File(...), heatmap: bool = False, summary: bool = False):
+async def predict(files: list[UploadFile] = File(...), heatmap: bool = False, summary: bool = False, return_original: bool = False):
     results = []
     for file in files:
         image_bytes = await file.read()
         try:
-            result = process_image(image_bytes, generate_heatmap=heatmap)
+            result = process_image(image_bytes, generate_heatmap=heatmap, return_original=return_original)
             result["filename"] = file.filename
             results.append(result)
         except Exception as e:
