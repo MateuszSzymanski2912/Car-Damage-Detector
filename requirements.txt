@@ -1,0 +1,10 @@
+torch==2.7.1+cpu
+torchvision==0.22.1+cpu
+numpy
+pillow
+opencv-python-headless
+fastapi
+uvicorn
+openai
+python-multipart
+--extra-index-url https://download.pytorch.org/whl/cpu
