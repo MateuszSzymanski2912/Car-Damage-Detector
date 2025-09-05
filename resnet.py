@@ -63,7 +63,7 @@ def generate_gradcam(model, img_tensor):
 
     return cam
 
-def process_image(image_bytes, generate_heatmap=False, return_original=False):
+def process_image(image_bytes, generate_heatmap=False):
     image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
     img_tensor = transform(image).unsqueeze(0).to(DEVICE)
 
@@ -85,6 +85,6 @@ def process_image(image_bytes, generate_heatmap=False, return_original=False):
     return {
         "label": label,
         "probability": f"{round(probs * 100, 2)}%",
-        "original_image": "data:image/jpeg;base64," + base64.b64encode(image_bytes).decode() if return_original else None,
+        "original_image": "data:image/jpeg;base64," + base64.b64encode(image_bytes).decode(),
         "heatmap": "data:image/jpeg;base64," + heatmap_b64 if generate_heatmap else None
     }

@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from resnet import process_image
 from chatgpt import summarize_with_chatgpt
 
-
+#sample text
 app = FastAPI(title="Car Damage Detection API")
 
 @app.get("/")
@@ -16,7 +16,7 @@ async def predict(files: list[UploadFile] = File(...), heatmap: bool = False, su
     for file in files:
         image_bytes = await file.read()
         try:
-            result = process_image(image_bytes, generate_heatmap=heatmap, return_original=return_original)
+            result = process_image(image_bytes, generate_heatmap=heatmap)
             result["filename"] = file.filename
             results.append(result)
         except Exception as e:
@@ -27,6 +27,10 @@ async def predict(files: list[UploadFile] = File(...), heatmap: bool = False, su
         chatgpt_summary = summarize_with_chatgpt(results)
     
     print("ChatGPT Summary:", chatgpt_summary)
+
+    if not return_original:
+        for r in results:
+            r.pop("original_image", None)
     
     return JSONResponse({
         "results": results,
