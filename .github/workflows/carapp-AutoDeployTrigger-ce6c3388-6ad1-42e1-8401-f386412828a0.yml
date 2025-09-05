@@ -1,16 +1,13 @@
 name: Trigger auto deployment for carapp
 
-# When this action will be executed
 on:
-  # Automatically trigger it when detected changes in repo
   push:
     branches: 
-      [ main ]
+    - main 
     paths:
     - '**'
     - '.github/workflows/carapp-AutoDeployTrigger-ce6c3388-6ad1-42e1-8401-f386412828a0.yml'
 
-  # Allow manual trigger 
   workflow_dispatch:      
 
 jobs:
@@ -36,14 +33,12 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}
           dockerfilePath: Dockerfile
-          _targetLabelKey_: _targetLabel_
           registryUrl: cardamagedetection.azurecr.io
           registryUsername: ${{ secrets.CARAPP_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CARAPP_REGISTRY_PASSWORD }}
           containerAppName: carapp
           resourceGroup: damage-detection
           imageToBuild: cardamagedetection.azurecr.io/carapp:${{ github.sha }}
-          _buildArgumentsKey_: |
-            _buildArgumentsValues_
+
 
 
